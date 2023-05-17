@@ -1,50 +1,60 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 
-#define MAX_INPUT_LENGTH 1024
+int main() {
+int pipefd[2];
+pid_t pid;
 
-int main(void)
-{
-	char *line = NULL;
-	char *args[MAX_INPUT_LENGTH];
-	int status;
-	size_t len = 0;
+// Create a pipe
+if (pipe(pipefd) == -1) {
+perror("pipe");
+exit(EXIT_FAILURE);
+}
 
-	while (1)
-	{
-		printf("#cisfun$ ");
-		if ((getline(&line, &len, stdin) == -1))
-		{
-			continue;
-		}
-		if (strcmp(line, "^c") == 0)
-		{
-			free(line);
-			return (0);
-		}
-		line[strcspn(line, "\n")] = 0;
-		args[0] = line;
-		args[1] = NULL;
-		pid_t pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-		}
-		else if (pid == 0)
-		{
-			execve(args[0], args, NULL);
-			perror("./shell");
-		}
-		else
-		{
-			waitpid(pid, &status, 0);
-		}
-	}
-	if (line != NULL)
-		free(line);
+// Fork a child process
+pid = fork();
 
-	return (0);
+if (pid == -1) {
+perror("fork");
+exit(EXIT_FAILURE);
+} else if (pid == 0) {
+// Child process
+// Close the read end of the pipe
+close(pipefd[1]);
+
+// Duplicate the read end of the pipe to stdin
+if (dup2(pipefd[0], STDIN_FILENO) == -1) {
+perror("dup2");
+exit(EXIT_FAILURE);
+}
+
+// Execute the "ls" command
+execlp("/bin/ls", "ls", NULL);
+
+// If execlp() returns, an error occurred
+perror("execlp");
+exit(EXIT_FAILURE);
+} else {
+// Parent process
+// Close the write end of the pipe
+close(pipefd[0]);
+
+// Read the command from stdin
+char command[256];
+fgets(command, sizeof(command), stdin);
+
+// Write the command to the pipe
+write(pipefd[1], command, sizeof(command));
+
+// Close the write end of the pipe
+close(pipefd[1]);
+
+// Wait for the child process to finish
+wait(NULL);
+}
+
+return 0;
 }
