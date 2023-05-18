@@ -8,11 +8,11 @@ void parse_arguments(char *input, char **tokens) {
     int token_count = 0;
 
     // Split the input into tokens based on whitespace
-    token = strtok(input, " \t\n");
+    token = strtok(input, " ");
     while (token != NULL && token_count < MAX_NUM_TOKENS - 1) {
         tokens[token_count] = token;
         token_count++;
-        token = strtok(NULL, " \t\n");
+        token = strtok(NULL, " ");
     }
 
     tokens[token_count] = NULL;  // Set the last token to NULL for execve

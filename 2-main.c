@@ -33,8 +33,6 @@ int main(void) {
 
         // Parse the input into tokens
         parse_arguments(line, args);
-        args[0] = line;
-		args[1] = NULL;
 		pid = fork();
         if (pid == -1) {
             perror("fork");
