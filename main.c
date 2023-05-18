@@ -5,6 +5,7 @@
 #include <sys/wait.h>
 
 #define MAX_INPUT_LENGTH 1024
+extern char** environ;
 
 int main(void)
 {
@@ -12,12 +13,15 @@ int main(void)
 	char *args[MAX_INPUT_LENGTH];
 	int status;
 	size_t len = 0;
+	pid_t pid;
 
 	while (1)
 	{
 		printf("#cisfun$ ");
 		if ((getline(&line, &len, stdin) == -1))
 		{
+			if (feof(stdin))
+				exit(EXIT_SUCCESS);
 			continue;
 		}
 		if (strcmp(line, "^c") == 0)
@@ -28,14 +32,14 @@ int main(void)
 		line[strcspn(line, "\n")] = 0;
 		args[0] = line;
 		args[1] = NULL;
-		pid_t pid = fork();
+		pid = fork();
 		if (pid == -1)
 		{
 			perror("fork");
 		}
 		else if (pid == 0)
 		{
-			execve(args[0], args, NULL);
+			execve(args[0], args, environ);
 			perror("./shell");
 		}
 		else
