@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
+extern char** environ;
 
 void parse_arguments(char *input, char **tokens) {
     char *token;

@@ -7,16 +7,20 @@
 
 #define MAX_INPUT_LENGTH 1024
 #define MAX_NUM_TOKENS 64
+extern char** environ;
 
 int main(void) {
     char *line = NULL;
-    char *args[MAX_NUM_TOKENS];
+    char *args[MAX_INPUT_LENGTH];
     int status;
     size_t len = 0;
+	pid_t pid;
 
     while (1) {
         printf("#cisfun$ ");
-        if (getline(&line, &len, stdin) == -1) {
+        if ((getline(&line, &len, stdin) == -1)) {
+            if (feof(stdin))
+				exit(EXIT_SUCCESS);
             continue;
         }
 
@@ -25,19 +29,20 @@ int main(void) {
             return 0;
         }
 
-        line[strcspn(line, "\n")] = '\0';
+        line[strcspn(line, "\n")] = 0;
 
         // Parse the input into tokens
         parse_arguments(line, args);
-
-        pid_t pid = fork();
+        args[0] = line;
+		args[1] = NULL;
+		pid = fork();
         if (pid == -1) {
             perror("fork");
-        } else if (pid == 0) {
+            }
+             else if (pid == 0) {
             // Child process
-            execve(args[0], args, NULL);
+            execve(args[0], args, environ);
             perror("./shell");
-            exit(1);
         } else {
             // Parent process
             waitpid(pid, &status, 0);
