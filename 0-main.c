@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 /**
 * main - the main shell code
 * @ac: number of arguments passed
@@ -10,8 +9,6 @@
 * serve as the main code for the project
 * Return: 0 on success
 */
-
-
 int main(int ac __attribute__((unused)), char **av)
 {
 char **commands = NULL;
@@ -26,14 +23,13 @@ signal(SIGINT, ctrl_c_handler);
 shell_name = av[0];
 while (1)
 {
+non_interactive();
 print("my_shell ", STDOUT_FILENO);
 if (getline(&line, &len, stdin) == -1)
 {
 free(line);
 exit(status);
 }
-
-/*remove newline*/
 index = strcspn(line, "\n");
 line[index] = '\0';
 
