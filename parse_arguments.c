@@ -1,19 +1,30 @@
-#include "main.h"
-#include <stdio.h>
-#include <string.h>
-extern char** environ;
+/**
+ * parse_arguments - parses input into tokens
+ * @input_string: input to be parsed
+ * @delim: delimiter to be used
+ *
+ * Return: array of tokens
+ */
 
-void parse_arguments(char *input, char **tokens) {
-    char *token;
-    int token_count = 0;
+char **parse_arguments(char *input_string, char *delim)
+{
+	int token_count = 0;
+	char **av = NULL;
+	char *token = NULL;
+	char *state_fun = NULL;
 
-    // Split the input into tokens based on whitespace
-    token = strtok(input, " ");
-    while (token != NULL && token_count < MAX_NUM_TOKENS - 1) {
-        tokens[token_count] = token;
-        token_count++;
-        token = strtok(NULL, " ");
-    }
+	token = strtok(input_string, delim, &state_fun);
 
-    tokens[token_count] = NULL;  // Set the last token to NULL for execve
+	while (token != NULL)
+	{
+		av = realloc(av, sizeof(*av) * token_count, sizeof(*av) * (token_count + 1));
+		av[token_count] = token;
+		token = strtok(NULL, delim, &state_fun);
+		token_count++;
+	}
+
+	av = realloc(av, sizeof(*av) * token_count, sizeof(*av) * (token_count + 1));
+	av[token_count] = NULL;
+
+	return (av);
 }
