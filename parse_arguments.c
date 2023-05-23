@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * parse_arguments - parses input into tokens
  * @input_string: input to be parsed
@@ -13,17 +15,18 @@ char **parse_arguments(char *input_string, char *delim)
 	char *token = NULL;
 	char *state_fun = NULL;
 
-	token = strtok(input_string, delim, &state_fun);
+	token = _strtok(input_string, delim, &state_fun);
 
 	while (token != NULL)
 	{
-		av = realloc(av, sizeof(*av) * token_count, sizeof(*av) * (token_count + 1));
+		av = _realloc(av, sizeof(*av) * token_count,
+				sizeof(*av) * (token_count + 1));
 		av[token_count] = token;
-		token = strtok(NULL, delim, &state_fun);
+		token = _strtok(NULL, delim, &state_fun);
 		token_count++;
 	}
 
-	av = realloc(av, sizeof(*av) * token_count, sizeof(*av) * (token_count + 1));
+	av = _realloc(av, sizeof(*av) * token_count, sizeof(*av) * (token_count + 1));
 	av[token_count] = NULL;
 
 	return (av);

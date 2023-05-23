@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * _strcpy - copies a string
  * @source: source to copy from

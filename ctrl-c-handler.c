@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * ctrl_c_handler - handles the signal SIGINT
  * @signum: signal number
@@ -7,5 +9,5 @@
 void ctrl_c_handler(int signum)
 {
 	if (signum == SIGINT)
-		print("\n(myshell) ", STDIN_FILENO);
+		print("\nmy_shell ", STDIN_FILENO);
 }

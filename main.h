@@ -51,5 +51,13 @@ char *checkin_path(char *);
 void (*get_func(char *))(char **);
 extern void non_interactive(void);
 extern void initializer(char **current_command, int type_command);
+void _strcpy(char *, char *);
+char *_strcat(char *, char *);
+char *_strchr(char *, char);
+char *_strtok(char *, char *, char **);
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+char *_getenv(char *);
+void env(char **);
+void quit(char **);
 
 #endif /*MAIN_H*/

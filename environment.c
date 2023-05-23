@@ -6,7 +6,6 @@
 *
 * Return: void
 */
-
 void env(char **tokenized_command __attribute__((unused)))
 {
 int i;

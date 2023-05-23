@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * print - prints a string to stdout
  * @string: string to be printed

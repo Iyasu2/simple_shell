@@ -1,12 +1,10 @@
 #include "main.h"
-#include <string.h>
 
 /**
  * non_interactive - handles non_interactive mode
  *
  * Return: void
  */
-
 void non_interactive(void)
 {
 	char **current_command = NULL;
@@ -21,7 +19,7 @@ void non_interactive(void)
 			line[index] = '\0';
 
 			remove_comment(line);
-			commands = parse_arguments(line, "; ");
+			commands = parse_arguments(line, ";");
 			for (i = 0;  commands[i] != NULL;  i++)
 			{
 				current_command = parse_arguments(commands[i], " ");

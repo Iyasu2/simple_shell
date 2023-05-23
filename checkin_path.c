@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
 * checkin_path - checks if a command is found in the PATH variable
 * @command: command to be used

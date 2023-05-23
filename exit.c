@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
 * quit - exits the shell
 * @tokenized_command: command entered
@@ -38,5 +40,5 @@ exit(arg);
 }
 }
 else
-print("$: exit doesn't take more than one argument\n", STDERR_FILENO);
+print("my_shell: exit doesn't take more than one argument\n", STDERR_FILENO);
 }

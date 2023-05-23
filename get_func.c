@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
 * get_func - retrieves a function based on the command given and a mapping
 * @command: string to check against the mapping

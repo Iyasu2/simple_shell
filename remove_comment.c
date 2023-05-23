@@ -1,3 +1,5 @@
+#include "main.h"
+
 /**
  * remove_comment - removes comments
  * @input: input to be used

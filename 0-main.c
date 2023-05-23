@@ -1,5 +1,10 @@
 #include "main.h"
 
+char **commands = NULL;
+int status = 0;
+char *line = NULL;
+char *shell_name = NULL;
+
 /**
 * main - the main shell code
 * @ac: number of arguments passed
@@ -11,10 +16,6 @@
 */
 int main(int ac __attribute__((unused)), char **av)
 {
-char **commands = NULL;
-int status = 0;
-char *line = NULL;
-char *shell_name = NULL;
 char **current_command = NULL;
 int i, index, type_command = 0;
 size_t len = 0;
@@ -34,7 +35,7 @@ index = strcspn(line, "\n");
 line[index] = '\0';
 
 remove_comment(line);
-commands = parse_arguments(line, "; ");
+commands = parse_arguments(line, ";");
 for (i = 0;  commands[i] != NULL;  i++)
 {
 current_command = parse_arguments(commands[i], " ");
