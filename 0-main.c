@@ -29,6 +29,8 @@ if (getline(&line, &len, stdin) == -1)
 {
 free(line);
 }
+type_command = parse_input(current_command[0]);
+initializer(current_command, type_command);
 }
 free(line);
 }
