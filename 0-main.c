@@ -1,11 +1,6 @@
 #include "main.h"
 
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 96d4131e4334846ff40290fcde17c9b7f1c19279
 /**
 * main - the main shell code
 * @ac: number of arguments passed
@@ -19,13 +14,12 @@
 
 int main(int ac __attribute__((unused)), char **av)
 {
-<<<<<<< HEAD
-=======
 char **commands = NULL;
 int status = 0;
->>>>>>> 96d4131e4334846ff40290fcde17c9b7f1c19279
 char *line = NULL;
 char *shell_name = NULL;
+char **current_command = NULL;
+int i, index, type_command = 0;
 size_t len = 0;
 
 signal(SIGINT, ctrl_c_handler);
@@ -36,15 +30,13 @@ print("my_shell ", STDOUT_FILENO);
 if (getline(&line, &len, stdin) == -1)
 {
 free(line);
-<<<<<<< HEAD
-}
-type_command = parse_input(current_command[0]);
-initializer(current_command, type_command);
-}
-free(line);
-=======
 exit(status);
 }
+
+/*remove newline*/
+index = strcspn(line, "\n");
+line[index] = '\0';
+
 commands = parse_arguments(line, "; ");
 for (i = 0;  commands[i] != NULL;  i++)
 {
@@ -55,11 +47,11 @@ if (current_command[0] == NULL)
 	break;
 }
 type_command = parse_input(current_command[0]);
+initializer(current_command, type_command);
 free(current_command);
 }
 free(commands);
 }
 free(line);
 return (status);
->>>>>>> 96d4131e4334846ff40290fcde17c9b7f1c19279
 }
